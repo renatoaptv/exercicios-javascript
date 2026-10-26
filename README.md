@@ -8,6 +8,7 @@ Repositório para acompanhar os exercícios das aulas do professor André no Vis
 2. **objetos/script.js** — criação de objeto e acesso às propriedades `nome` e `valor`.
 3. **objetos/varios-produtos.js** — lista de produtos usando um array de objetos e `forEach()`.
 4. **sort/exercicio01.js** — ordenar Mouse (707), Teclado (375) e Headset (222) do menor para o maior preço com `sort()`, depois exibir os nomes com `forEach()`.
+5. **objetos/array-produtos-peso.js** — array de três objetos com propriedades `nome`, `valor` e `peso`; exemplo de acesso com `produtos[0].nome`.
 
 ## Como executar no VS Code
 
@@ -20,6 +21,7 @@ node reduce/exercicio01.js
 node objetos/script.js
 node objetos/varios-produtos.js
 node sort/exercicio01.js
+node objetos/array-produtos-peso.js
 ```
 
 Cada exercício é independente. Nenhum outro projeto é necessário para executar os exemplos.
