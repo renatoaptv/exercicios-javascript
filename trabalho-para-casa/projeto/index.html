@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Casa Forma — uma coleção de móveis, luzes e objetos para fazer casa.">
+  <title>Casa Forma — nossa coleção</title>
+  <link rel="icon" href="assets/marca.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="favoritos.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="pular" href="#colecao">Ir para a coleção</a>
+  <div class="limite">
+    <header class="cabecalho">
+      <a class="marca" href="#inicio" aria-label="Casa Forma, início">casa<span>/</span>forma</a>
+      <nav class="navegacao" aria-label="Navegação principal">
+        <a href="#colecao">Nossa coleção</a>
+        <a href="#titulo-favoritos">Meus favoritos</a>
+      </nav>
+      <span class="edicao">Objetos para viver bem · 2026</span>
+    </header>
+
+    <main id="inicio">
+      <section class="hero" aria-labelledby="titulo">
+        <div>
+          <p class="sobretitulo">Uma coleção com a sua cara</p>
+          <h1 id="titulo">Peças que<br>fazem casa.</h1>
+          <p class="hero-descricao">Luzes, formas e pequenos detalhes. Reúna os objetos que transformam um espaço no seu lugar.</p>
+          <button id="alternar-destaque" class="link-acao" type="button">Destacar coleção <span aria-hidden="true">↗</span></button>
+        </div>
+        <figure class="hero-objeto">
+          <img src="assets/cadeira.webp" alt="Cadeira estofada com base de metal" width="330" height="300">
+          <figcaption class="etiqueta"><small>O essencial permanece</small><strong>Boa forma. Todo dia.</strong></figcaption>
+        </figure>
+      </section>
+
+      <section class="resumo" aria-label="Resumo da coleção">
+        <p class="resumo-frase">Poucas peças. Muitas possibilidades.</p>
+        <div class="resumo-numeros">
+          <div class="numero"><strong id="quantidade">3</strong><small>peças na sua coleção</small></div>
+          <div class="numero"><strong id="total">R$ 564,97</strong><small>valor da coleção</small></div>
+        </div>
+      </section>
+
+      <div class="area-trabalho">
+        <aside class="painel" aria-labelledby="titulo-personalizacao">
+          <p class="sobretitulo">Uma seleção com a sua cara</p>
+          <h2 id="titulo-personalizacao">Sua coleção</h2>
+          <p class="texto-apoio">Dê um nome ao seu cantinho e escolha as peças que mais combinam com você.</p>
+          <div class="campo">
+            <label for="novo-titulo">Título da coleção</label>
+            <input id="novo-titulo" type="text" placeholder="Ex.: Meu próximo cantinho">
+          </div>
+          <button id="alterar-titulo" class="botao botao-secundario botao-largo" type="button">Atualizar título</button>
+          <p id="mensagem-titulo" class="mensagem" role="status"></p>
+        </aside>
+
+        <section class="colecao" id="colecao" aria-labelledby="titulo-colecao">
+          <div class="colecao-cabecalho">
+            <h2 id="titulo-colecao">Nossa coleção</h2>
+            <label class="edicao" for="ordem" hidden>Ordenar</label>
+            <select id="ordem" class="ordenacao" aria-label="Ordenar coleção">
+              <option value="original">Ordem de chegada</option>
+              <option value="crescente">Menor preço primeiro</option>
+              <option value="decrescente">Maior preço primeiro</option>
+              <option value="nome">Nome de A a Z</option>
+            </select>
+          </div>
+
+          <section class="resumo-favoritos" aria-labelledby="titulo-favoritos">
+            <div class="resumo-favoritos-titulo">
+              <p class="sobretitulo">Escolhas com significado</p>
+              <h3 id="titulo-favoritos">Meus favoritos</h3>
+            </div>
+            <div class="resumo-favoritos-numeros" aria-live="polite" aria-atomic="true">
+              <div><strong id="quantidade-favoritos">0</strong><span>peças favoritas</span></div>
+              <div id="resumo-valor-favoritos" hidden><strong id="total-favoritos">R$ 0,00</strong><span>valor dos favoritos</span></div>
+            </div>
+          </section>
+
+          <ul id="lista-produtos" class="lista-produtos">
+            <li class="produto" data-id="1">
+              <img class="produto-imagem" src="assets/luminaria.webp" alt="Luminária de mesa" width="240" height="180">
+              <p class="produto-categoria">Iluminação</p><h3 class="produto-nome">Luminária de mesa</h3>
+              <p class="produto-preco">R$ 49,99</p><div class="produto-acoes"><button class="acao-produto" type="button" data-id="1">Remover</button></div>
+            </li>
+            <li class="produto" data-id="2">
+              <img class="produto-imagem" src="assets/vaso.webp" alt="Vaso para plantas" width="240" height="180">
+              <p class="produto-categoria">Decoração</p><h3 class="produto-nome">Vaso para plantas</h3>
+              <p class="produto-preco">R$ 14,99</p><div class="produto-acoes"><button class="acao-produto" type="button" data-id="2">Remover</button></div>
+            </li>
+            <li class="produto" data-id="3">
+              <img class="produto-imagem" src="assets/cadeira.webp" alt="Cadeira de escritório" width="240" height="180">
+              <p class="produto-categoria">Móveis</p><h3 class="produto-nome">Cadeira de escritório</h3>
+              <p class="produto-preco">R$ 499,99</p><div class="produto-acoes"><button class="acao-produto" type="button" data-id="3">Remover</button></div>
+            </li>
+          </ul>
+          <p id="aviso-vazio" class="aviso-vazio" hidden>Sua próxima descoberta começa aqui.</p>
+
+        </section>
+      </div>
+    </main>
+    <footer class="rodape"><strong>casa/forma · pequenos detalhes, grandes espaços.</strong><span>Projeto de aula · produtos e preços fictícios</span></footer>
+  </div>
+</body>
+</html>

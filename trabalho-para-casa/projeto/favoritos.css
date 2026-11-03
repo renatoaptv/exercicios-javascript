@@ -1,0 +1,31 @@
+/* Aparência fornecida para o trabalho. Implemente os comportamentos em script.js. */
+.resumo-favoritos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 19px 21px;
+  margin-bottom: 20px;
+  border: 1px solid #d5ddca;
+  border-left: 3px solid var(--terracota);
+  background: #e9eddf;
+}
+.resumo-favoritos .sobretitulo { margin-bottom: 6px; font-size: 8px; }
+.resumo-favoritos h3 { margin: 0; font-family: var(--serifa); font-size: 26px; font-weight: 400; letter-spacing: -.6px; }
+.resumo-favoritos-numeros { display: flex; align-items: center; gap: 30px; }
+.resumo-favoritos-numeros strong { display: block; font-family: var(--serifa); font-size: 24px; font-weight: 400; white-space: nowrap; }
+.resumo-favoritos-numeros span { display: block; margin-top: 5px; font-size: 9px; color: var(--suave); }
+.produto.produto-favorito { background: #fffcf3; border-color: var(--terracota); box-shadow: 0 0 0 1px var(--terracota); }
+.produto-favorito .produto-categoria { color: var(--terracota); }
+.produto-favorito .produto-categoria::after { content: " · FAVORITO"; }
+.destaque .produto.produto-favorito { border-color: var(--terracota); box-shadow: 0 0 0 1px var(--terracota); }
+.produto-acoes { flex-direction: column; align-items: flex-end; gap: 4px; }
+.botao-favorito { color: var(--verde); text-decoration: none; font-size: 10px; padding: 4px 7px; min-height: 30px; border: 1px solid #ccd4c1; background: #f0f3e9; }
+.botao-favorito:hover { background: #e4ead9; color: var(--verde); }
+.botao-favorito[aria-pressed="true"] { color: #8a3e2a; border-color: #d6aa96; background: #f5e7db; }
+@media (max-width: 720px) {
+  .resumo-favoritos { align-items: start; flex-direction: column; padding: 17px; gap: 17px; }
+  .resumo-favoritos-numeros { width: 100%; justify-content: space-between; gap: 18px; }
+  .resumo-favoritos-numeros strong { font-size: 23px; }
+  .botao-favorito { font-size: 9px; padding: 4px 5px; }
+}
