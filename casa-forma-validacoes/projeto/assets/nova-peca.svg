@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" role="img" aria-label="Ilustração genérica de novo produto">
+<rect width="400" height="300" fill="#edf0e6"/>
+<rect x="118" y="64" width="164" height="164" rx="16" fill="#fffefb" stroke="#cad3c3" stroke-width="4"/>
+<path d="M160 196v-62l40-23 40 23v62" fill="none" stroke="#52705c" stroke-width="8" stroke-linejoin="round"/>
+<path d="M177 156h46" stroke="#a44f36" stroke-width="7" stroke-linecap="round"/>
+<text x="200" y="258" fill="#52705c" text-anchor="middle" font-family="Arial,sans-serif" font-size="16">NOVA PEÇA</text>
+</svg>
