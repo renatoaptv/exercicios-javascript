@@ -1,3 +1,11 @@
+# Casa Forma — projeto atualizado
+
+**[ABRIR O SITE CASA FORMA](https://renatoaptv.github.io/exercicios-javascript/casa-forma-validacoes/projeto/index.html)**
+
+A versão do exercício com cadastro, edição por ID, cancelamento, validações e favoritos está em [casa-forma-validacoes/projeto](./casa-forma-validacoes/projeto).
+
+---
+
 # Exercícios de JavaScript
 
 Repositório para acompanhar os exercícios das aulas do professor André no Visual Studio Code.
