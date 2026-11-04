@@ -101,6 +101,15 @@ function renderizarProdutos() {
     botao.setAttribute("aria-label", "Remover " + produto.nome);
     botao.addEventListener("click", removerProduto);
 
+    // O ID do cartão identifica qual produto será editado.
+    const botaoEditar = document.createElement("button");
+    botaoEditar.classList.add("acao-produto", "botao-editar");
+    botaoEditar.type = "button";
+    botaoEditar.dataset.id = produto.id;
+    botaoEditar.textContent = "Editar";
+    botaoEditar.setAttribute("aria-label", "Editar " + produto.nome);
+    botaoEditar.addEventListener("click", editarProduto);
+
     // Botão de favoritar e desfavoritar.
     const botaoFavorito = document.createElement("button");
     botaoFavorito.classList.add("acao-produto", "botao-favorito");
@@ -111,6 +120,7 @@ function renderizarProdutos() {
     botaoFavorito.addEventListener("click", alternarFavorito);
 
     acoes.appendChild(botaoFavorito);
+    acoes.appendChild(botaoEditar);
     acoes.appendChild(botao);
     item.appendChild(imagem);
     item.appendChild(categoria);
@@ -154,11 +164,19 @@ function removerProduto(evento) {
     return produto.id !== id;
   });
 
+  // Se o produto aberto no formulário foi removido, sai da edição.
+  if (idEmEdicao === id) {
+    finalizarFormulario();
+  }
+
   renderizarProdutos();
 }
 
 // Usa um ID novo a cada cadastro, inclusive após remover produtos.
 let proximoId = Math.max(0, ...produtos.map((produto) => produto.id)) + 1;
+
+// null = cadastro de um produto novo; número = ID do produto em edição.
+let idEmEdicao = null;
 
 // Os IDs abaixo são os mesmos que o professor colocou no index.html.
 const formulario = document.querySelector("#formulario");
@@ -167,6 +185,10 @@ const campoPreco = document.querySelector("#preco");
 const campoCategoria = document.querySelector("#categoria");
 const mensagemProduto = document.querySelector("#mensagem");
 const contadorNome = document.querySelector("#contador-nome");
+const tituloFormulario = document.querySelector("#titulo-formulario");
+const botaoSalvarProduto = document.querySelector("#salvar-produto");
+const botaoCancelarEdicao = document.querySelector("#cancelar-edicao");
+const textoOriginalBotao = botaoSalvarProduto.innerHTML;
 
 function atualizarContadorNome() {
   const caracteres = campoNome.value.length;
@@ -193,6 +215,37 @@ function limparErros() {
   });
   mensagemProduto.classList.remove("erro", "sucesso");
   mensagemProduto.textContent = "";
+}
+
+// Devolve o formulário ao modo cadastro, sem modificar o array produtos.
+function finalizarFormulario() {
+  idEmEdicao = null;
+  formulario.reset();
+  limparErros();
+  atualizarContadorNome();
+  tituloFormulario.textContent = "Uma nova peça";
+  botaoSalvarProduto.innerHTML = textoOriginalBotao;
+  botaoCancelarEdicao.hidden = true;
+}
+
+// Usa o ID, e não a posição no array: ordenar não troca o produto editado.
+function editarProduto(evento) {
+  const id = Number(evento.currentTarget.dataset.id);
+  const produto = produtos.find((item) => item.id === id);
+
+  // Pode ter sido removido antes de o botão ser acionado.
+  if (!produto) return;
+
+  idEmEdicao = produto.id;
+  campoNome.value = produto.nome;
+  campoPreco.value = produto.preco;
+  campoCategoria.value = produto.categoria;
+  limparErros();
+  atualizarContadorNome();
+  tituloFormulario.textContent = "Editar peça";
+  botaoSalvarProduto.textContent = "Salvar alterações";
+  botaoCancelarEdicao.hidden = false;
+  campoNome.focus();
 }
 
 function salvarProduto(evento) {
@@ -225,28 +278,51 @@ function salvarProduto(evento) {
     return;
   }
 
-  produtos.push({
-    id: proximoId,
-    nome: nome,
-    preco: preco,
-    categoria: categoria,
-    imagem: "assets/nova-peca.svg",
-    favorito: false
-  });
-  proximoId += 1;
+  const estavaEditando = idEmEdicao !== null;
+
+  if (estavaEditando) {
+    const produto = produtos.find((item) => item.id === idEmEdicao);
+    if (!produto) {
+      finalizarFormulario();
+      mensagemProduto.textContent = "Produto não encontrado. Edição encerrada.";
+      mensagemProduto.classList.add("erro");
+      return;
+    }
+
+    // Atualiza apenas os dados editáveis, preservando ID, imagem e favorito.
+    produto.nome = nome;
+    produto.preco = preco;
+    produto.categoria = categoria;
+  } else {
+    produtos.push({
+      id: proximoId,
+      nome: nome,
+      preco: preco,
+      categoria: categoria,
+      imagem: "assets/nova-peca.svg",
+      favorito: false
+    });
+    proximoId += 1;
+  }
 
   // Mantém a ordenação, os favoritos e os totais atualizados.
   renderizarProdutos();
 
   // Prepara o formulário para um novo cadastro.
-  formulario.reset();
-  atualizarContadorNome();
-  mensagemProduto.textContent = "Produto cadastrado com sucesso!";
+  finalizarFormulario();
+  mensagemProduto.textContent = estavaEditando
+    ? "Produto atualizado com sucesso!"
+    : "Produto cadastrado com sucesso!";
   mensagemProduto.classList.add("sucesso");
   campoNome.focus();
 }
 
 formulario.addEventListener("submit", salvarProduto);
+botaoCancelarEdicao.addEventListener("click", () => {
+  // Cancelar limpa os erros e encerra a edição, mas não salva alterações.
+  finalizarFormulario();
+  campoNome.focus();
+});
 // A atualização acontece a cada caractere digitado.
 campoNome.addEventListener("input", () => {
   campoNome.classList.remove("invalido");
