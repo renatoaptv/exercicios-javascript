@@ -238,7 +238,7 @@ function editarProduto(evento) {
 
   idEmEdicao = produto.id;
   campoNome.value = produto.nome;
-  campoPreco.value = produto.preco;
+  campoPreco.value = String(produto.preco);
   campoCategoria.value = produto.categoria;
   limparErros();
   atualizarContadorNome();
