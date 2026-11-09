@@ -31,6 +31,7 @@ botaoAlterar.addEventListener("click", () => {
   }
 
   titulo.textContent = novoTitulo;
+  salvarColecao();
   mensagemTitulo.textContent = "Título atualizado.";
   mensagemTitulo.classList.add("sucesso");
 });
@@ -176,6 +177,7 @@ function alternarFavorito(evento) {
   if (produto) {
     produto.favorito = !produto.favorito;
     renderizarProdutos();
+    salvarColecao();
   }
 }
 
@@ -192,6 +194,7 @@ function removerProduto(evento) {
   }
 
   renderizarProdutos();
+  salvarColecao();
 }
 
 // Usa um ID novo a cada cadastro, inclusive após remover produtos.
@@ -211,6 +214,78 @@ const tituloFormulario = document.querySelector("#titulo-formulario");
 const botaoSalvarProduto = document.querySelector("#salvar-produto");
 const botaoCancelarEdicao = document.querySelector("#cancelar-edicao");
 const textoOriginalBotao = botaoSalvarProduto.innerHTML;
+
+// Persistência da coleção no navegador (conteúdo da aula).
+const CHAVE_COLECAO = "casa-forma-09-11-colecao";
+const mensagemArmazenamento = document.querySelector("#mensagem-armazenamento");
+const tituloInicial = titulo.textContent;
+
+// Evita carregar dados incompletos ou corrompidos no catálogo.
+function validarColecao(dados) {
+  if (!dados || typeof dados !== "object" || !Array.isArray(dados.produtos)) {
+    throw new Error("A coleção precisa ter uma lista de produtos.");
+  }
+
+  if (typeof dados.titulo !== "string" || !dados.titulo.trim()) {
+    throw new Error("O título da coleção é inválido.");
+  }
+
+  if (!Number.isSafeInteger(dados.proximoId) || dados.proximoId < 1) {
+    throw new Error("O próximo ID da coleção é inválido.");
+  }
+
+  const ids = new Set();
+  let maiorId = 0;
+  for (const produto of dados.produtos) {
+    if (!produto || !Number.isSafeInteger(produto.id) || produto.id < 1 ||
+        ids.has(produto.id) || typeof produto.nome !== "string" ||
+        !produto.nome.trim() || !Number.isFinite(produto.preco) ||
+        produto.preco < 0.01 || typeof produto.categoria !== "string" ||
+        typeof produto.imagem !== "string" || typeof produto.favorito !== "boolean") {
+      throw new Error("Há um produto inválido na coleção salva.");
+    }
+    ids.add(produto.id);
+    maiorId = Math.max(maiorId, produto.id);
+  }
+
+  if (dados.proximoId <= maiorId) {
+    throw new Error("O próximo ID deve ser maior que os IDs existentes.");
+  }
+}
+
+function salvarColecao() {
+  try {
+    const dados = { produtos: produtos, titulo: titulo.textContent, proximoId: proximoId };
+    const texto = JSON.stringify(dados);
+    localStorage.setItem(CHAVE_COLECAO, texto);
+    mensagemArmazenamento.textContent = "";
+    mensagemArmazenamento.classList.remove("erro");
+  } catch (error) {
+    mensagemArmazenamento.textContent = "A alteração aparece na tela, mas não foi salva neste navegador.";
+    mensagemArmazenamento.classList.add("erro");
+    console.warn(error.message);
+  }
+}
+
+function carregarColecao() {
+  try {
+    const texto = localStorage.getItem(CHAVE_COLECAO);
+    if (texto === null) return;
+
+    const dados = JSON.parse(texto);
+    validarColecao(dados);
+
+    produtos = dados.produtos;
+    if (dados.titulo !== tituloInicial) {
+      titulo.textContent = dados.titulo;
+    }
+    proximoId = dados.proximoId;
+  } catch (error) {
+    mensagemArmazenamento.textContent = "Não foi possível recuperar a coleção salva. A coleção inicial foi aberta.";
+    mensagemArmazenamento.classList.add("erro");
+    console.warn(error.message);
+  }
+}
 
 function atualizarContadorNome() {
   const caracteres = campoNome.value.length;
@@ -329,6 +404,7 @@ function salvarProduto(evento) {
 
   // Mantém a ordenação, os favoritos e os totais atualizados.
   renderizarProdutos();
+  salvarColecao();
 
   // Prepara o formulário para um novo cadastro.
   finalizarFormulario();
@@ -361,4 +437,5 @@ campoNome.addEventListener("input", () => {
 });
 
 campoOrdem.addEventListener("change", renderizarProdutos);
+carregarColecao();
 renderizarProdutos();
