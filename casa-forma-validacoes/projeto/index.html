@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/marca.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="favoritos.css">
-  <script src="script.js?v=20261103-edicao2" defer></script>
+  <script src="script.js?v=20261109-busca-vazio" defer></script>
 </head>
 <body>
   <a class="pular" href="#colecao">Ir para a coleção</a>
@@ -98,7 +98,7 @@
             </select>
           </div>
 
-          <div id="area-busca" hidden>
+          <div id="area-busca">
             <div class="busca"><input id="busca" type="search" aria-label="Buscar peça pelo nome"
                 placeholder="Qual peça você procura?"></div>
             <div id="filtros-categoria" class="filtros" aria-label="Filtrar por categoria" hidden>
@@ -137,7 +137,7 @@
               <p class="produto-preco">R$ 499,99</p><div class="produto-acoes"><button class="acao-produto" type="button" data-id="3">Remover</button></div>
             </li>
           </ul>
-          <p id="aviso-vazio" class="aviso-vazio" hidden>Sua próxima descoberta começa aqui.</p>
+          <p id="aviso-vazio" class="aviso-vazio" role="status" aria-live="polite" hidden>Sua próxima descoberta começa aqui.</p>
 
         </section>
       </div>
