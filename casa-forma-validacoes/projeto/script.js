@@ -53,6 +53,19 @@ const campoOrdem = document.querySelector("#ordem");
 const quantidadeFavoritos = document.querySelector("#quantidade-favoritos");
 const resumoValorFavoritos = document.querySelector("#resumo-valor-favoritos");
 const totalFavoritos = document.querySelector("#total-favoritos");
+const campoBusca = document.querySelector("#busca");
+
+// A busca acontece em tempo real, sem alterar a coleção original.
+document.querySelector("#area-busca").hidden = false;
+campoBusca.addEventListener("input", renderizarProdutos);
+
+function obterProdutosVisiveis() {
+  const busca = campoBusca.value.trim().toLocaleLowerCase("pt-BR");
+
+  return produtos.filter((produto) => {
+    return produto.nome.toLocaleLowerCase("pt-BR").includes(busca);
+  });
+}
 
 function aplicarOrdenacao() {
   if (campoOrdem.value === "crescente") {
@@ -68,9 +81,10 @@ function aplicarOrdenacao() {
 
 function renderizarProdutos() {
   aplicarOrdenacao();
+  const produtosVisiveis = obterProdutosVisiveis();
   lista.textContent = "";
 
-  produtos.forEach((produto) => {
+  produtosVisiveis.forEach((produto) => {
     const item = document.createElement("li");
     const imagem = document.createElement("img");
     const categoria = document.createElement("p");
@@ -136,7 +150,15 @@ function renderizarProdutos() {
 
   quantidade.textContent = produtos.length;
   totalElemento.textContent = formatarPreco(total);
-  avisoVazio.hidden = produtos.length > 0;
+
+  // Diferencia a coleção sem produtos de uma busca sem resultados.
+  avisoVazio.hidden = produtosVisiveis.length > 0;
+  if (produtosVisiveis.length === 0) {
+    avisoVazio.textContent = produtos.length === 0
+      ? "Sua coleção está vazia. Adicione uma peça para começar."
+      : "Nenhuma peça encontrada para esta busca. Tente outro nome.";
+  }
+
   // Conta os produtos que estão favoritos.
   const favoritos = produtos.filter((produto) => produto.favorito);
   quantidadeFavoritos.textContent = favoritos.length;
