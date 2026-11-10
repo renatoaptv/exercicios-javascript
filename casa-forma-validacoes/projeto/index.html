@@ -6,9 +6,9 @@
   <meta name="description" content="Casa Forma — uma coleção de móveis, luzes e objetos para fazer casa.">
   <title>Casa Forma — nossa coleção</title>
   <link rel="icon" href="assets/marca.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261110-async-await">
   <link rel="stylesheet" href="favoritos.css">
-  <script src="script.js?v=20261110-promises" defer></script>
+  <script src="script.js?v=20261110-async-await" defer></script>
 </head>
 <body>
   <a class="pular" href="#colecao">Ir para a coleção</a>
@@ -162,6 +162,28 @@
         <ul class="laboratorio-lista" id="lista-produtos-api" aria-label="Nomes dos produtos consultados"></ul>
         <ol class="laboratorio-ordem" id="ordem-execucao-js" aria-label="Ordem da execução do JavaScript" hidden></ol>
         <p class="laboratorio-dica">Primeiro roda o código síncrono, depois as callbacks das Promises, e então o <code>setTimeout(..., 0)</code>. A saída também aparece no console.</p>
+
+        <div class="atividade-async" id="async-exercicio">
+          <p class="sobretitulo">Continuação da aula · Async/Await</p>
+          <h3>Exercício 2 — Consulta com async/await</h3>
+          <p>Reescrevemos a consulta com <code>async</code> e <code>await</code>, verificando o status HTTP, lendo o JSON, imprimindo os nomes com <code>forEach()</code> e tratando os erros.</p>
+          <div class="laboratorio-acoes">
+            <button class="botao" id="buscar-produtos-async" type="button">Consultar com async/await</button>
+            <button class="botao botao-secundario" id="testar-erro-async" type="button">Testar /products/0</button>
+          </div>
+          <p class="laboratorio-status" id="status-async" role="status" aria-live="polite">Clique em um botão para executar o exercício.</p>
+          <ul class="laboratorio-lista" id="lista-produtos-async" aria-label="Produtos retornados pela consulta assíncrona"></ul>
+          <details class="atividade-async-detalhes">
+            <summary>Entenda os tipos de falha</summary>
+            <ul>
+              <li><strong>HTTP 404 ou 500:</strong> a resposta chegou, mas indica erro.</li>
+              <li><strong>Rede indisponível ou bloqueada:</strong> a requisição pode falhar antes de receber um status HTTP.</li>
+              <li><strong>JSON inválido:</strong> a conversão com <code>resposta.json()</code> falha.</li>
+              <li><strong>JSON sem products:</strong> conferimos se <code>dados.products</code> é um array.</li>
+              <li><strong>HTTP 204:</strong> resposta bem-sucedida, porém sem corpo; não tentamos converter para JSON.</li>
+            </ul>
+          </details>
+        </div>
       </section>
     </main>
     <footer class="rodape"><strong>casa/forma · pequenos detalhes, grandes espaços.</strong><span>Projeto de aula · produtos e preços fictícios</span></footer>
