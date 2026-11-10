@@ -475,3 +475,87 @@ campoNome.addEventListener("input", () => {
 campoOrdem.addEventListener("change", renderizarProdutos);
 carregarColecao();
 renderizarProdutos();
+
+
+// Atividade de Promises: consulta à API sem alterar os produtos da Casa Forma.
+const URL_PRODUTOS = "https://dummyjson.com/products";
+const URL_PRODUTOS_ERRO = "https://dummyjson.com/products/0";
+
+const botaoBuscarApi = document.querySelector("#buscar-produtos-api");
+const botaoErroApi = document.querySelector("#testar-erro-api");
+const botaoOrdemJs = document.querySelector("#demonstrar-ordem-js");
+const listaProdutosApi = document.querySelector("#lista-produtos-api");
+const statusApi = document.querySelector("#status-api");
+const ordemExecucaoJs = document.querySelector("#ordem-execucao-js");
+
+// Retorna a cadeia de Promises, verifica o status HTTP e imprime os nomes com forEach.
+function listarNomesComThen(url) {
+  botaoBuscarApi.disabled = true;
+  botaoErroApi.disabled = true;
+  listaProdutosApi.replaceChildren();
+  ordemExecucaoJs.hidden = true;
+  statusApi.classList.remove("erro", "sucesso");
+  statusApi.textContent = "Consultando os produtos...";
+
+  return fetch(url)
+    .then((resposta) => {
+      if (!resposta.ok) {
+        throw new Error("Falha HTTP " + resposta.status);
+      }
+      return resposta.json();
+    })
+    .then((dados) => {
+      if (!Array.isArray(dados.products)) {
+        throw new Error("A resposta não contém uma lista de produtos.");
+      }
+
+      dados.products.forEach((produto) => {
+        console.log(produto.title);
+        const item = document.createElement("li");
+        item.textContent = produto.title;
+        listaProdutosApi.appendChild(item);
+      });
+
+      statusApi.textContent = dados.products.length + " produtos recebidos com sucesso.";
+      statusApi.classList.add("sucesso");
+      return dados;
+    })
+    .catch((erro) => {
+      console.error("Erro na consulta:", erro.message);
+      statusApi.textContent = "Erro na consulta: " + erro.message;
+      statusApi.classList.add("erro");
+      return null;
+    })
+    .finally(() => {
+      botaoBuscarApi.disabled = false;
+      botaoErroApi.disabled = false;
+    });
+}
+
+// Teste da URL válida e teste de falha, como proposto na atividade.
+botaoBuscarApi.addEventListener("click", () => listarNomesComThen(URL_PRODUTOS));
+botaoErroApi.addEventListener("click", () => listarNomesComThen(URL_PRODUTOS_ERRO));
+
+// Demonstra a ordem: síncrono > microtarefas das Promises > setTimeout.
+botaoOrdemJs.addEventListener("click", () => {
+  listaProdutosApi.replaceChildren();
+  ordemExecucaoJs.replaceChildren();
+  ordemExecucaoJs.hidden = false;
+  statusApi.textContent = "Veja abaixo a ordem de execução.";
+  statusApi.classList.remove("erro", "sucesso");
+
+  function registrar(texto) {
+    console.log(texto);
+    const item = document.createElement("li");
+    item.textContent = texto;
+    ordemExecucaoJs.appendChild(item);
+  }
+
+  registrar("Início do código síncrono");
+
+  setTimeout(() => registrar("Callback do setTimeout com atraso zero"), 0);
+
+  Promise.resolve().then(() => registrar("Callback da Promise (.then)"));
+
+  registrar("Fim do código síncrono");
+});
