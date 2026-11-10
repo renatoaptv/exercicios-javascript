@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/marca.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="favoritos.css">
-  <script src="script.js?v=20261110-filtro-categoria" defer></script>
+  <script src="script.js?v=20261110-promises" defer></script>
 </head>
 <body>
   <a class="pular" href="#colecao">Ir para a coleção</a>
@@ -18,6 +18,7 @@
       <nav class="navegacao" aria-label="Navegação principal">
         <a href="#colecao">Nossa coleção</a>
         <a href="#novo-produto">Adicionar peça</a>
+        <a href="#api-produtos">API</a>
       </nav>
       <span class="edicao">Objetos para viver bem · 2026</span>
     </header>
@@ -142,6 +143,26 @@
 
         </section>
       </div>
+
+      <section class="laboratorio-api" id="api-produtos" aria-labelledby="titulo-api">
+        <div class="laboratorio-topo">
+          <div>
+            <p class="sobretitulo">Prática de JavaScript · Promises e Fetch</p>
+            <h2 id="titulo-api">Uma coleção além da vitrine.</h2>
+            <p>Consulte produtos de uma API externa usando <code>fetch()</code>, <code>.then()</code> e <code>forEach()</code>. Esta demonstração não modifica sua coleção ou seus favoritos.</p>
+          </div>
+          <span class="laboratorio-etiqueta">AULA · 10/11/2026</span>
+        </div>
+        <div class="laboratorio-acoes">
+          <button class="botao" id="buscar-produtos-api" type="button">Consultar produtos</button>
+          <button class="botao botao-secundario" id="testar-erro-api" type="button">Testar URL com erro</button>
+          <button class="botao botao-secundario" id="demonstrar-ordem-js" type="button">Ver ordem de execução</button>
+        </div>
+        <p class="laboratorio-status" id="status-api" role="status" aria-live="polite">Escolha uma ação para começar.</p>
+        <ul class="laboratorio-lista" id="lista-produtos-api" aria-label="Nomes dos produtos consultados"></ul>
+        <ol class="laboratorio-ordem" id="ordem-execucao-js" aria-label="Ordem da execução do JavaScript" hidden></ol>
+        <p class="laboratorio-dica">Primeiro roda o código síncrono, depois as callbacks das Promises, e então o <code>setTimeout(..., 0)</code>. A saída também aparece no console.</p>
+      </section>
     </main>
     <footer class="rodape"><strong>casa/forma · pequenos detalhes, grandes espaços.</strong><span>Projeto de aula · produtos e preços fictícios</span></footer>
   </div>
