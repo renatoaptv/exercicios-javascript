@@ -58,7 +58,10 @@ const campoBusca = document.querySelector("#busca");
 
 // A busca acontece em tempo real, sem alterar a coleção original.
 document.querySelector("#area-busca").hidden = false;
-campoBusca.addEventListener("input", renderizarProdutos);
+campoBusca.addEventListener("input", () => {
+  renderizarProdutos();
+  salvarBuscaDaAba();
+});
 
 function obterProdutosVisiveis() {
   const busca = campoBusca.value.trim().toLocaleLowerCase("pt-BR");
@@ -284,6 +287,17 @@ function carregarColecao() {
     mensagemArmazenamento.textContent = "Não foi possível recuperar a coleção salva. A coleção inicial foi aberta.";
     mensagemArmazenamento.classList.add("erro");
     console.warn(error.message);
+  }
+}
+
+// Guarda o texto da pesquisa somente durante a sessão da aba.
+const CHAVE_BUSCA = "casa-forma-09-11-busca";
+
+function salvarBuscaDaAba() {
+  try {
+    sessionStorage.setItem(CHAVE_BUSCA, campoBusca.value);
+  } catch (error) {
+    console.warn("Não foi possível recuperar a busca desta aba.", error.message);
   }
 }
 
