@@ -174,3 +174,14 @@ input::placeholder { color: #92958a; }
   .laboratorio-acoes .botao { flex: 1 1 100%; }
   .navegacao { gap: 10px; font-size: 10px; }
 }
+
+
+/* Continuação do exercício: consulta async/await no mesmo site. */
+.atividade-async { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--linha); scroll-margin-top: 24px; }
+.atividade-async h3 { font-family: var(--serifa); font-size: clamp(23px, 3vw, 32px); letter-spacing: -.6px; font-weight: 400; margin: 0 0 12px; }
+.atividade-async > p:not(.sobretitulo) { font-size: 12px; line-height: 1.7; color: var(--suave); margin: 0 0 12px; }
+.atividade-async code { font-family: monospace; font-size: 11px; }
+.atividade-async-detalhes { margin-top: 23px; font-size: 12px; color: var(--texto); border: 1px solid var(--linha); padding: 15px; }
+.atividade-async-detalhes summary { font-weight: 700; }
+.atividade-async-detalhes ul { margin-bottom: 2px; padding-left: 22px; line-height: 1.8; }
+.atividade-async-detalhes li + li { margin-top: 6px; }
