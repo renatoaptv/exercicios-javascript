@@ -58,16 +58,38 @@ const campoBusca = document.querySelector("#busca");
 
 // A busca acontece em tempo real, sem alterar a coleção original.
 document.querySelector("#area-busca").hidden = false;
-campoBusca.addEventListener("input", () => {
-  renderizarProdutos();
-  salvarBuscaDaAba();
+// Os botões permitem mostrar todas as peças ou apenas uma categoria.
+let filtroCategoria = "Todas";
+const filtrosCategoria = document.querySelectorAll(".filtro");
+document.querySelector("#filtros-categoria").hidden = false;
+
+filtrosCategoria.forEach((botao) => {
+  botao.addEventListener("click", () => {
+    filtroCategoria = botao.dataset.categoria;
+
+    filtrosCategoria.forEach((filtro) => {
+      const ativo = filtro === botao;
+      filtro.classList.toggle("ativo", ativo);
+      filtro.setAttribute("aria-pressed", String(ativo));
+    });
+
+    renderizarProdutos();
+  });
 });
 
+campoBusca.addEventListener("input", () => {
+  salvarBuscaDaAba();
+  renderizarProdutos();
+});
+
+// Combina a pesquisa pelo nome com a categoria escolhida.
 function obterProdutosVisiveis() {
   const busca = campoBusca.value.trim().toLocaleLowerCase("pt-BR");
 
   return produtos.filter((produto) => {
-    return produto.nome.toLocaleLowerCase("pt-BR").includes(busca);
+    const correspondeNome = produto.nome.toLocaleLowerCase("pt-BR").includes(busca);
+    const correspondeCategoria = filtroCategoria === "Todas" || produto.categoria === filtroCategoria;
+    return correspondeNome && correspondeCategoria;
   });
 }
 
