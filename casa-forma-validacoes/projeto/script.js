@@ -559,3 +559,67 @@ botaoOrdemJs.addEventListener("click", () => {
 
   registrar("Fim do código síncrono");
 });
+
+
+// Exercício 2 — mesma consulta, agora com async/await e try/catch/finally.
+// A versão com .then() continua disponível acima para comparação.
+const botaoBuscarAsync = document.querySelector("#buscar-produtos-async");
+const botaoErroAsync = document.querySelector("#testar-erro-async");
+const listaProdutosAsync = document.querySelector("#lista-produtos-async");
+const statusAsync = document.querySelector("#status-async");
+
+async function listarNomesComAsync(url) {
+  botaoBuscarAsync.disabled = true;
+  botaoErroAsync.disabled = true;
+  listaProdutosAsync.replaceChildren();
+  statusAsync.classList.remove("erro", "sucesso");
+  statusAsync.textContent = "Aguardando resposta da API...";
+
+  try {
+    const resposta = await fetch(url);
+
+    // fetch não lança um erro automaticamente em respostas HTTP 404 ou 500.
+    if (!resposta.ok) {
+      throw new Error("Falha HTTP: " + resposta.status);
+    }
+
+    // HTTP 204 indica sucesso sem conteúdo, por isso não há JSON para ler.
+    if (resposta.status === 204) {
+      throw new Error("A resposta HTTP 204 não possui conteúdo.");
+    }
+
+    let dados;
+    try {
+      dados = await resposta.json();
+    } catch (erroJson) {
+      throw new Error("A resposta não contém JSON válido.");
+    }
+
+    if (!dados || !Array.isArray(dados.products)) {
+      throw new Error("JSON recebido sem uma lista products válida.");
+    }
+
+    dados.products.forEach((produto) => {
+      console.log(produto.title);
+      const item = document.createElement("li");
+      item.textContent = produto.title;
+      listaProdutosAsync.appendChild(item);
+    });
+
+    statusAsync.textContent = "Sucesso! " + dados.products.length + " produtos consultados.";
+    statusAsync.classList.add("sucesso");
+    return dados;
+  } catch (erro) {
+    console.error("Erro na consulta async:", erro.message);
+    listaProdutosAsync.replaceChildren();
+    statusAsync.textContent = "Erro na consulta: " + erro.message;
+    statusAsync.classList.add("erro");
+    return null;
+  } finally {
+    botaoBuscarAsync.disabled = false;
+    botaoErroAsync.disabled = false;
+  }
+}
+
+botaoBuscarAsync.addEventListener("click", () => listarNomesComAsync(URL_PRODUTOS));
+botaoErroAsync.addEventListener("click", () => listarNomesComAsync(URL_PRODUTOS_ERRO));
