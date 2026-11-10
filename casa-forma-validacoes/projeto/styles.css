@@ -152,3 +152,25 @@ input::placeholder { color: #92958a; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+
+/* Área de prática de fetch integrada à coleção Casa Forma. */
+.laboratorio-api { margin: 0 0 56px; padding: 35px; border: 1px solid var(--linha); background: var(--branco); scroll-margin-top: 18px; }
+.laboratorio-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.laboratorio-topo h2 { font-family: var(--serifa); font-weight: 400; letter-spacing: -1px; font-size: clamp(28px, 3vw, 40px); margin: 0 0 14px; }
+.laboratorio-topo p:not(.sobretitulo) { margin: 0; max-width: 640px; color: var(--suave); font-size: 12px; line-height: 1.8; }
+.laboratorio-topo code, .laboratorio-dica code { font-family: monospace; color: var(--verde); font-size: 11px; }
+.laboratorio-etiqueta { white-space: nowrap; padding-top: 4px; font-size: 9px; letter-spacing: 1px; color: var(--terracota); }
+.laboratorio-acoes { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+.laboratorio-status { font-size: 12px; line-height: 1.6; margin: 20px 0 12px; }
+.laboratorio-lista { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.laboratorio-lista li { border: 1px solid var(--linha); background: var(--papel); padding: 12px 14px; line-height: 1.4; font-size: 11px; overflow-wrap: anywhere; }
+.laboratorio-ordem { padding: 16px 16px 16px 36px; margin: 0; background: var(--verde-claro); line-height: 1.9; font-size: 12px; }
+.laboratorio-dica { margin: 22px 0 0; font-size: 11px; line-height: 1.7; color: var(--suave); }
+@media(max-width:720px) {
+  .laboratorio-api { padding: 20px; margin-bottom: 34px; }
+  .laboratorio-topo { flex-direction: column; gap: 9px; }
+  .laboratorio-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .laboratorio-acoes .botao { flex: 1 1 100%; }
+  .navegacao { gap: 10px; font-size: 10px; }
+}
