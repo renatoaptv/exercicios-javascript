@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício - Promises e Fetch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f5f7;
+            color: #20242a;
+        }
+        main {
+            max-width: 780px;
+            margin: 32px auto;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #e1e3e8;
+            border-radius: 10px;
+        }
+        h1 { font-size: 26px; margin-top: 0; }
+        h2 { font-size: 18px; margin-top: 28px; }
+        p { line-height: 1.6; }
+        button {
+            border: 0;
+            border-radius: 6px;
+            padding: 12px 16px;
+            background: #253a76;
+            color: #fff;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        #saida {
+            background: #141821;
+            color: #e7eaf2;
+            padding: 18px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            max-height: 440px;
+            overflow-y: auto;
+            overflow-wrap: anywhere;
+        }
+        #saida div { margin-bottom: 4px; }
+        #saida .erro { color: #ff9999; }
+        code { background: #edf0f7; padding: 2px 4px; }
+        small { color: #5d6572; }
+        @media (max-width: 600px) {
+            main { margin: 12px; padding: 18px; }
+            h1 { font-size: 22px; }
+        }
+    </style>
+    <script src="exemplos-fetch.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1>Atividade de JavaScript: Promises e Fetch</h1>
+        <p>Exercício com <code>setTimeout</code>, <code>.then()</code>, <code>fetch()</code> e <code>forEach()</code>.</p>
+
+        <h2>1. Ordem de execução</h2>
+        <p>O JavaScript executa primeiro as instruções síncronas. Depois executa as callbacks das Promises (microtarefas) e, por último, a callback do <code>setTimeout</code> (tarefa), mesmo com atraso zero. O temporizador não interrompe o código que já está sendo executado.</p>
+
+        <h2>2. Consulta com .then()</h2>
+        <p>A função <code>listarNomesComThen(url)</code> consulta a API, verifica o status HTTP, transforma a resposta em JSON e usa <code>forEach()</code> para mostrar os nomes dos produtos. Ela retorna a cadeia de Promises.</p>
+
+        <h2>3. Testes</h2>
+        <p>Primeiro é feita a consulta em <code>/products</code>. Em seguida, a página testa <code>/products/0</code> para verificar o tratamento da falha.</p>
+
+        <button id="executar" type="button">Executar novamente</button>
+        <div id="saida" role="log" aria-live="polite"></div>
+        <p><small>Os mesmos resultados podem ser visualizados no console do navegador (F12).</small></p>
+    </main>
+</body>
+</html>
