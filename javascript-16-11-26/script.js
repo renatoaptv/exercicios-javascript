@@ -21,6 +21,14 @@ let tarefas = [
     { id: 3, todo: 'Aprender POST, PUT e DELETE', completed: false }
 ];
 
+function atualizarContador() {
+    const total = tarefas.length;
+    const concluidas = tarefas.filter((tarefa) => tarefa.completed).length;
+    const porcentagem = total === 0 ? 0 : Math.round(concluidas / total * 100);
+
+    contador.textContent = `${concluidas} de ${total} concluídas (${porcentagem}%)`;
+}
+
 function renderizar() {
     let html = '';
 
@@ -35,6 +43,7 @@ function renderizar() {
     }
 
     lista.innerHTML = html;
+    atualizarContador();
 }
 
 renderizar();
