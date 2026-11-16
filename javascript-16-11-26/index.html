@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topo">
+      <div>
+        <h1 id="saudacao">Olá!</h1>
+        <p id="contador">0 de 0 concluídas</p>
+      </div>
+      <button id="btn-nome" class="btn-secundario" type="button">Trocar nome</button>
+    </header>
+
+    <form id="form-tarefa" class="form-tarefa">
+      <input id="input-tarefa" type="text" placeholder="O que precisa ser feito?" aria-label="Nova tarefa" autocomplete="off">
+      <button type="submit">Adicionar</button>
+    </form>
+    <p id="mensagem" class="mensagem" role="status"></p>
+
+    <div class="filtros">
+      <label for="filtro">Mostrar:</label>
+      <select id="filtro">
+        <option value="todas">Todas</option>
+        <option value="pendentes">Pendentes</option>
+        <option value="concluidas">Concluídas</option>
+      </select>
+    </div>
+
+    <!--
+      O JavaScript vai colocar aqui dentro um <li> por tarefa, neste formato:
+
+      <li class="tarefa concluida">
+        <span class="texto">Texto da tarefa</span>
+        <button class="btn-concluir" data-id="1">Desfazer</button>
+        <button class="btn-excluir" data-id="1">Excluir</button>
+      </li>
+    -->
+    <ul id="lista" class="lista"></ul>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
