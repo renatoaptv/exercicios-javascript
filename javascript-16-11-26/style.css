@@ -1,0 +1,104 @@
+:root {
+  --fundo: #f4f1ea;
+  --cartao: #fffdf8;
+  --texto: #22252b;
+  --suave: #727680;
+  --borda: #e2ddd0;
+  --destaque: #0f6e5c;
+  --erro: #b3261e;
+  --sucesso: #0f6e5c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+.app {
+  max-width: 640px;
+  margin: 32px auto;
+  padding: 28px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+h1 { margin: 0 0 4px; font-size: 1.6rem; }
+#contador { margin: 0; color: var(--suave); }
+
+button, input, select { font: inherit; }
+
+button {
+  padding: 8px 14px;
+  border: 1px solid var(--destaque);
+  border-radius: 8px;
+  background: var(--destaque);
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.1); }
+
+.btn-secundario, .btn-concluir {
+  background: transparent;
+  color: var(--destaque);
+}
+.btn-excluir {
+  background: transparent;
+  border-color: var(--erro);
+  color: var(--erro);
+}
+
+.form-tarefa { display: flex; gap: 8px; }
+.form-tarefa input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mensagem { min-height: 1.4em; margin: 8px 0 16px; font-size: 0.9rem; }
+.mensagem.erro { color: var(--erro); }
+.mensagem.sucesso { color: var(--sucesso); }
+
+.filtros { display: flex; align-items: center; gap: 8px; color: var(--suave); }
+.filtros select {
+  padding: 6px 8px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.lista { list-style: none; margin: 12px 0 0; padding: 0; }
+.lista:empty::after {
+  content: "Nenhuma tarefa por aqui.";
+  display: block;
+  padding: 24px 0;
+  text-align: center;
+  color: var(--suave);
+}
+
+.tarefa {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--borda);
+}
+.tarefa .texto { flex: 1; min-width: 160px; }
+.tarefa.concluida .texto { text-decoration: line-through; color: var(--suave); }
